@@ -1,0 +1,37 @@
+{
+  "name": "simple-payment-channel",
+  "author": "Eric Olszewski <eolszewski@gmail.com>",
+  "version": "1.0.0",
+  "description": "A simple one-way payment channel for conducting off-chain payment with on-chain settlement.",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "truffle migrate --reset && truffle test",
+    "coverage": "./node_modules/.bin/solidity-coverage"
+  },
+  "dependencies": {
+    "truffle-contract": "^3.0.6",
+    "truffle-test-utils": "^0.1.0",
+    "zeppelin-solidity": "^1.11.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "solidity-coverage": "^0.5.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eolszewski/simple-payment-channel.git"
+  },
+  "keywords": [
+    "Payment",
+    "Channels",
+    "State",
+    "Channels",
+    "Ethereum",
+    "Blockchain"
+  ],
+  "bugs": {
+    "url": "https://github.com/eolszewski/simple-payment-channel/issues"
+  },
+  "homepage": "https://github.com/eolszewski/simple-payment-channel#readme"
+}
