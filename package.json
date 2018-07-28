@@ -15,7 +15,6 @@
     "ethereumjs-abi": "^0.6.5",
     "ethereumjs-util": "^5.2.0",
     "truffle-contract": "^3.0.6",
-    "truffle-test-utils": "^0.1.0",
     "zeppelin-solidity": "^1.11.0"
   },
   "devDependencies": {

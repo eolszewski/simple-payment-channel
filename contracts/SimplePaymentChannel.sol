@@ -60,7 +60,7 @@ contract SimplePaymentChannel {
     function closeChannel(uint256 _balance, bytes _signedMessage) public {
         // only recipient can call closeChannel
         require(msg.sender == recipient);
-        require(isValidSignature(balance, _signedMessage));
+        require(isValidSignature(_balance, _signedMessage));
 
         // temp vars for calculating sender and recipient remittances
         uint256 balance = _balance;
@@ -73,11 +73,13 @@ contract SimplePaymentChannel {
             remainder = address(this).balance.sub(balance);
         }
 
-        // remit payment to sender and recipient
+        // remit payment to recipient
         recipient.transfer(balance);
-        selfdestruct(sender);
 
         emit ChannelClosed(remainder, balance);
+
+        // remit remainder to sender
+        selfdestruct(sender);
     }
 
     /**
@@ -118,7 +120,7 @@ contract SimplePaymentChannel {
         view
         returns (bool)
     {
-        bytes32 message = prefixed(keccak256(abi.encodePacked(this, _balance)));
+        bytes32 message = prefixed(keccak256(abi.encodePacked(address(this), _balance)));
 
         // check that the signature is from the payment sender
         return message.recover(_signedMessage) == sender;

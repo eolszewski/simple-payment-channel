@@ -27,6 +27,17 @@ const isValidSignature = async function (contractAddress, balance, signature, ex
   return signer.toLowerCase() === util.stripHexPrefix(expectedSigner).toLowerCase();
 }
 
+const getEvent = async function (event, result) {
+  for (let i = 0; i < result.logs.length; i++) {
+    const log = result.logs[i];
+
+    if (log.event === event) {
+      return log;
+    }
+  }
+  return undefined;
+}
+
 const assertFail = async function (promise, message) {
   try {
     await promise;
@@ -63,5 +74,6 @@ module.exports = {
   constructPaymentMessage,
   signMessage,
   isValidSignature,
+  getEvent,
   assertFail
 }
