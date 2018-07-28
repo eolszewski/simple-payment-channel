@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Web3 = require('web3');
 
 module.exports = {
@@ -7,7 +8,8 @@ module.exports = {
       provider: new Web3.providers.HttpProvider(
         "http://localhost:8545"
       ),
-      network_id: '*' // Match any network id
+      mnemonic: 'nose phone clip fee agent crop decorate spell album february oppose anxiety',
+      network_id: '*' // Match any network id,
     }
   }
 }

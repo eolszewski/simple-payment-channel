@@ -1,21 +1,33 @@
-class BlockMiner {
-  async mine(numberOfBlocks) {
-    for (let i = 0; i < numberOfBlocks; i++) {
-      await new Promise((resolve, _) => {
-        web3.currentProvider.sendAsync({ method: "evm_mine", id: i }, resolve);
-      });
-    }
-  }
+const abi = require('ethereumjs-abi');
+const util = require('ethereumjs-util');
+const BN = require('bn.js')
 
-  async mineUntilBlock(blockNumber) {
-    const padding = blockNumber - web3.eth.blockNumber;
-    await this.mine(padding);
-  }
+//============================================================================
+// PUBLIC FUNCTIONS
+//============================================================================
+
+const constructPaymentMessage = async function (contractAddress, balance) {
+  return abi.soliditySHA3(
+    ["address", "uint256"],
+    [new BN(contractAddress, 16), balance]
+  );
 }
 
-module.exports.blockMiner = new BlockMiner();
+const signMessage = async function (web3, message, accountAddress) {
+  return await web3.eth.sign(
+    accountAddress,
+    `0x${message.toString("hex")}`
+  );
+}
 
-module.exports.assertFail = async (promise, message) => {
+const isValidSignature = async function (contractAddress, balance, signature, expectedSigner) {
+  let message = await constructPaymentMessage(contractAddress, balance);
+  let prefixedMessage = await prefixed(message);
+  let signer = await recoverSigner(prefixedMessage, signature);
+  return signer.toLowerCase() === util.stripHexPrefix(expectedSigner).toLowerCase();
+}
+
+const assertFail = async function (promise, message) {
   try {
     await promise;
     assert(false);
@@ -27,4 +39,29 @@ module.exports.assertFail = async (promise, message) => {
         assert(false);
     }
   }
+}
+
+//============================================================================
+// INTERNAL FUNCTIONS
+//============================================================================
+
+async function prefixed(hash) {
+  return abi.soliditySHA3(
+    ["string", "bytes32"],
+    ["\x19Ethereum Signed Message:\n32", hash]
+  );
+}
+
+async function recoverSigner(message, signature) {
+  let split = util.fromRpcSig(signature);
+  let publicKey = util.ecrecover(message, split.v, split.r, split.s);
+  let signer = util.pubToAddress(publicKey).toString("hex");
+  return signer;
+}
+
+module.exports = {
+  constructPaymentMessage,
+  signMessage,
+  isValidSignature,
+  assertFail
 }
