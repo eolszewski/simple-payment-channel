@@ -1,4 +1,4 @@
-# simple-payment-channel
+# simple-payment-channel [![Build Status](https://travis-ci.org/eolszewski/simple-payment-channel.svg?branch=master)](https://travis-ci.org/eolszewski/simple-payment-channel) [![Coverage Status](https://coveralls.io/repos/github/eolszewski/simple-payment-channel/badge.svg?branch=master)](https://coveralls.io/github/eolszewski/simple-payment-channel?branch=master)
 
 Work in Progress
 
