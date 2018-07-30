@@ -6,7 +6,7 @@ It's basically Lightning on Ethereum.
 
 Example app leveraging a simple uni-directional payment channel 
 
-So, right now this isn't an application yet - that will be coming in the next few hours / tomorrow (July 29) 
+So, right now this isn't an application yet - that will be coming tomorrow (July 30) - to keep up with progress on it, check out https://github.com/eolszewski/ipfs-pubsub-chatroom/tree/features/payment-channel (i'm having trouble with the signalling server right now, so waiting on that to clear up)
 
 I just was impatient to getting something out and all the tests are passing...
 
